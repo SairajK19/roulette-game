@@ -53,8 +53,14 @@ const startGame = async () => {
     console.log("Enter a number between 1 to 5, (1 and 5 are included)");
     userGuess = Number(readline.question());
 
-    const gameSignature = await transferSOL(userWallet.publicKey, treasureKeyPair.publicKey, userWallet, stakeValue);
-    console.log(`\nSignature of staking is ${gameSignature}\n`);
+    try {
+        const gameSignature = await transferSOL(userWallet.publicKey, treasureKeyPair.publicKey, userWallet, stakeValue);
+        console.log(`\nSignature of staking is ${gameSignature}\n`);
+    } catch (err) {
+        console.log("Not enough SOL in wallet!");
+        console.log("Exiting...");
+        return;
+    }
 
     if (userGuess === randNum) {
         console.log(`You guessed it right!!\n`);
